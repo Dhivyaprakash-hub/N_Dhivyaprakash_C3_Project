@@ -42,4 +42,14 @@ class RestaurantServiceTest {
         assertEquals(initialNumberOfRestaurants + 1, service.getRestaurants().size());
 
     }
+
+    @Test
+    public void searching_for_non_existing_restaurant_should_throw_exception() {
+        assertThrows(restaurantNotFoundException.class, () -> service.findRestaurantByName("Pantry d'or"));
+    }
+
+    @Test
+    public void removing_restaurant_that_does_not_exist_should_throw_exception() {
+        assertThrows(restaurantNotFoundException.class, () -> service.removeRestaurant("Pantry d'or"));
+    }
 }
