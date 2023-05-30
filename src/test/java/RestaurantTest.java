@@ -39,17 +39,26 @@ class RestaurantTest {
         restaurant.addToMenu("Sizzling brownie", 319);
         assertEquals(initialMenuSize + 1, restaurant.getMenu().size());
     }
-
+    @Test
+    public void removing_item_that_does_not_exist_should_throw_exception() {
+        assertThrows(itemNotFoundException.class, () -> restaurant.removeFromMenu("French fries"));
+    }
     @Test
     public void removing_item_from_menu_should_decrease_menu_size_by_1() throws itemNotFoundException {
         int initialMenuSize = restaurant.getMenu().size();
         restaurant.removeFromMenu("Vegetable lasagne");
         assertEquals(initialMenuSize - 1, restaurant.getMenu().size());
     }
-
     @Test
-    public void removing_item_that_does_not_exist_should_throw_exception() {
-        assertThrows(itemNotFoundException.class, () -> restaurant.removeFromMenu("French fries"));
+    public void calculate_total_should_throw_exception_if_item_not_found() {
+        List<String> selectedItems = Arrays.asList("Sweet corn soup", "French fries");
+        assertThrows(itemNotFoundException.class, () -> restaurant.calculateTotal(selectedItems));
     }
 
+    @Test
+    public void calculate_total_should_return_correct_total_price_for_selected_items() throws itemNotFoundException {
+        List<String> selectedItems = Arrays.asList("Sweet corn soup", "Vegetable lasagne");
+        int totalPrice = restaurant.calculateTotal(selectedItems);
+        assertEquals(388, totalPrice);
+    }
 }

@@ -21,6 +21,15 @@ class RestaurantServiceTest {
         restaurant = service.findRestaurantByName("Amelie's cafe");
     }
     @Test
+    public void searching_for_non_existing_restaurant_should_throw_exception() {
+        assertThrows(restaurantNotFoundException.class, () -> service.findRestaurantByName("Pantry d'or"));
+    }
+
+    @Test
+    public void removing_restaurant_that_does_not_exist_should_throw_exception() {
+        assertThrows(restaurantNotFoundException.class, () -> service.removeRestaurant("Pantry d'or"));
+    }
+    @Test
     public void searching_for_existing_restaurant_should_return_expected_restaurant_object() throws restaurantNotFoundException {
         Restaurant foundRestaurant = service.findRestaurantByName("Amelie's cafe");
         assertNotNull(foundRestaurant);
@@ -42,14 +51,14 @@ class RestaurantServiceTest {
         assertEquals(initialNumberOfRestaurants + 1, service.getRestaurants().size());
 
     }
-
     @Test
-    public void searching_for_non_existing_restaurant_should_throw_exception() {
-        assertThrows(restaurantNotFoundException.class, () -> service.findRestaurantByName("Pantry d'or"));
-    }
+    public void getOrderValue_should_return_correct_total_price_for_selected_items() {
+        restaurant.addToMenu("Item 1", 100);
+        restaurant.addToMenu("Item 2", 200);
+        restaurant.addToMenu("Item 3", 300);
 
-    @Test
-    public void removing_restaurant_that_does_not_exist_should_throw_exception() {
-        assertThrows(restaurantNotFoundException.class, () -> service.removeRestaurant("Pantry d'or"));
+        int orderValue = restaurant.getOrderValue("Item 1", "Item 3");
+
+        assertEquals(400, orderValue);
     }
 }

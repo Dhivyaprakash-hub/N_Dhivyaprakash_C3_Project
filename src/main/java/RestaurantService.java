@@ -4,6 +4,7 @@ import java.util.List;
 
 public class RestaurantService {
     private List<Restaurant> restaurants;
+
     public RestaurantService() {
         restaurants = new ArrayList<>();
     }
@@ -16,7 +17,6 @@ public class RestaurantService {
         }
         throw new restaurantNotFoundException("Restaurant not found: " + restaurantName);
     }
-
 
     public Restaurant addRestaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
         Restaurant newRestaurant = new Restaurant(name, location, openingTime, closingTime);
