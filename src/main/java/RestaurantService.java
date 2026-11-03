@@ -19,6 +19,8 @@ public class RestaurantService {
     }
 
     public Restaurant addRestaurant(String name, String location, LocalTime openingTime, LocalTime closingTime) {
+        if (name == null || name.isBlank()) throw new IllegalArgumentException("Restaurant name is required");
+        if (findRestaurantOrNull(name) != null) throw new IllegalArgumentException("Restaurant already exists: " + name);
         Restaurant newRestaurant = new Restaurant(name, location, openingTime, closingTime);
         restaurants.add(newRestaurant);
         return newRestaurant;
@@ -31,6 +33,10 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getRestaurants() {
-        return restaurants;
+        return java.util.Collections.unmodifiableList(new ArrayList<>(restaurants));
+    }
+
+    private Restaurant findRestaurantOrNull(String name) {
+        return restaurants.stream().filter(r -> r.getName().equals(name)).findFirst().orElse(null);
     }
 }
