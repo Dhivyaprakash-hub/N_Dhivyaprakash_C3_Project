@@ -1,0 +1,2 @@
+INSERT INTO restaurants (name,location,opening_time,closing_time) VALUES ('Amelie’s Kitchen','Chennai','10:30:00','22:00:00');
+INSERT INTO menu_items (restaurant_id,item_name,price) VALUES ((SELECT id FROM restaurants WHERE name='Amelie’s Kitchen'),'Sweet corn soup',99.00),((SELECT id FROM restaurants WHERE name='Amelie’s Kitchen'),'Vegetable lasagne',289.00),((SELECT id FROM restaurants WHERE name='Amelie’s Kitchen'),'Sizzling brownie',319.00);
